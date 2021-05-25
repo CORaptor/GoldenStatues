@@ -18,7 +18,7 @@ public:
 	// Sets default values for this actor's properties
 	AStatue();
 
-	UFUNCTION(BlueprintCallable, Category = "Statue")
+	UFUNCTION(BlueprintPure, Category = "Statue")
 	static AStatue* FindStatue(UObject* WorldContextObject, FText StatueName);
 
 	UFUNCTION(BlueprintPure, Category = "Statue")

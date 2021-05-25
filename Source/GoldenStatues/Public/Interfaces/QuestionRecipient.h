@@ -24,6 +24,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Questions")
 	bool Answer(bool FactualState);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Questions")
+	void RefuseToAnswer();
+
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 };

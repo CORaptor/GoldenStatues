@@ -13,6 +13,7 @@
 #include "Interfaces/Interactable.h"
 #include "Math/UnrealMathUtility.h"
 #include "Components/HealthComponent.h"
+#include "UI/QuestionWidget.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AGoldenStatuesCharacter
@@ -52,6 +53,25 @@ AGoldenStatuesCharacter::AGoldenStatuesCharacter()
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
 	Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
+}
+
+void AGoldenStatuesCharacter::AddScroll(TSubclassOf<class UQuestionWidget> QuestionClass)
+{
+	int Count = ScrollsPossessed.FindRef(QuestionClass);
+	Count++;
+	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Green, TEXT("Current count: " + FString::FromInt(Count)));
+	ScrollsPossessed.Add(QuestionClass, Count);
+}
+
+bool AGoldenStatuesCharacter::RemoveScroll(TSubclassOf<class UQuestionWidget> QuestionClass)
+{
+	int Count = ScrollsPossessed.FindRef(QuestionClass);
+	if (Count <= 0) return false;
+
+	Count--;
+	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Green, TEXT("Current count: " + FString::FromInt(Count)));
+	ScrollsPossessed.Add(QuestionClass, Count);
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////////

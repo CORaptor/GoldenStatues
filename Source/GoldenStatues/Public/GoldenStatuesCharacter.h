@@ -46,6 +46,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	bool EvaluateMovement(FVector DirectionVector, float Sign);
 
+	UFUNCTION(BlueprintCallable)
+	void AddScroll(TSubclassOf<class UQuestionWidget> QuestionClass);
+
+	UFUNCTION(BlueprintCallable)
+	bool RemoveScroll(TSubclassOf<class UQuestionWidget> QuestionClass);
+
 protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
@@ -60,6 +66,9 @@ protected:
 	// How much you have to wait between movements
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 	float MovementInterval = 1;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Interaction")
+	TMap<TSubclassOf<class UQuestionWidget>, int> ScrollsPossessed;
 
 	bool bLockRotation = false;
 	bool bLockMovement = false;
