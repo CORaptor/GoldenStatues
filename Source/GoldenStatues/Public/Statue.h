@@ -19,7 +19,10 @@ public:
 	AStatue();
 
 	UFUNCTION(BlueprintCallable, Category = "Statue")
-	AStatue* FindStatue(FText StatueName);
+	static AStatue* FindStatue(UObject* WorldContextObject, FText StatueName);
+
+	UFUNCTION(BlueprintPure, Category = "Statue")
+	static TArray<FText> GetAllStatuesNames(UObject* WorldContextObject);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")

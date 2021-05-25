@@ -21,10 +21,12 @@ AStatue::AStatue()
 
 }
 
-AStatue * AStatue::FindStatue(FText SearcbedStatueName)
+AStatue * AStatue::FindStatue(UObject* WorldContextObject, FText SearcbedStatueName)
 {
+	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
+	
 	TArray<AActor*> Actors;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AStatue::StaticClass(), Actors);
+	UGameplayStatics::GetAllActorsOfClass(World, AStatue::StaticClass(), Actors);
 
 	for(AActor* Actor : Actors)
 	{
@@ -36,6 +38,25 @@ AStatue * AStatue::FindStatue(FText SearcbedStatueName)
 	}
 	
 	return nullptr;
+}
+
+TArray<FText> AStatue::GetAllStatuesNames(UObject* WorldContextObject)
+{
+	TArray<FText> Names = TArray<FText>();
+	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
+
+	TArray<AActor*> Actors;
+	UGameplayStatics::GetAllActorsOfClass(World, AStatue::StaticClass(), Actors);
+
+	for (AActor* Actor : Actors)
+	{
+		AStatue* Statue = Cast<AStatue>(Actor);
+		if (Statue == nullptr) continue;
+
+		Names.Add(Statue->StatueName);
+	}
+
+	return Names;
 }
 
 // Called when the game starts or when spawned
