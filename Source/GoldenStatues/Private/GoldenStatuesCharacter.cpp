@@ -12,6 +12,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Interfaces/Interactable.h"
 #include "Math/UnrealMathUtility.h"
+#include "Components/HealthComponent.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AGoldenStatuesCharacter
@@ -49,6 +50,8 @@ AGoldenStatuesCharacter::AGoldenStatuesCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+
+	Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -130,20 +133,24 @@ void AGoldenStatuesCharacter::MoveForward(float Value)
 {
 	if ((Controller != NULL) && (Value != 0.0f) && !bLockMovement)
 	{
-		bLockMovement = true;
-		
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		//AddMovementInput(Direction, 400);
 
+		if (!EvaluateMovement(Direction, FMath::Sign(Value)))
+		{
+			GEngine->AddOnScreenDebugMessage(0, 1, FColor::Red, "Can't move in that direction");
+			return;
+		}
+
+		bLockMovement = true;
+		
+		
 		MoveForwardEvent(Value);
 		
-
-		//SetActorLocation(GetActorLocation() + GetActorForwardVector() * GridSize * FMath::Sign(Value));
 		// Free movement lock
 		FTimerDelegate TimerCallback;
 
@@ -162,15 +169,20 @@ void AGoldenStatuesCharacter::MoveRight(float Value)
 {
 	if ( (Controller != NULL) && (Value != 0.0f) && !bLockMovement)
 	{
-		bLockMovement = true;
-		
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-	
+
 		// get right vector 
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		// add movement in that direction
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y); 
+		
+		if (!EvaluateMovement(Direction, FMath::Sign(Value)))
+		{
+			GEngine->AddOnScreenDebugMessage(0, 1, FColor::Red, "Can't move in that direction");
+			return;
+		}
+
+		bLockMovement = true;
 		
 		MoveRightEvent(Value);
 

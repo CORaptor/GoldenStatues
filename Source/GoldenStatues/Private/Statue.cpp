@@ -23,8 +23,17 @@ AStatue::AStatue()
 
 AStatue * AStatue::FindStatue(FText SearcbedStatueName)
 {
-	TArray<AActor*> Statues;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AStatue::StaticClass(), Statues);
+	TArray<AActor*> Actors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AStatue::StaticClass(), Actors);
+
+	for(AActor* Actor : Actors)
+	{
+		AStatue* Statue = Cast<AStatue>(Actor);
+		if (Statue == nullptr) continue;
+
+		if (Statue->StatueName.EqualTo(SearcbedStatueName))
+			return Statue;
+	}
 	
 	return nullptr;
 }

@@ -42,7 +42,14 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void MoveRightEvent(float Value);
 
+	// Check if you can move in the given direction
+	UFUNCTION(BlueprintImplementableEvent)
+	bool EvaluateMovement(FVector DirectionVector, float Sign);
+
 protected:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	class UHealthComponent* Health;
 
 	UPROPERTY()
 	AActor* InteractionTarget;

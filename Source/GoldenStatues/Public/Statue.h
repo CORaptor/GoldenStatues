@@ -18,6 +18,7 @@ public:
 	// Sets default values for this actor's properties
 	AStatue();
 
+	UFUNCTION(BlueprintCallable, Category = "Statue")
 	AStatue* FindStatue(FText StatueName);
 
 protected:
@@ -27,10 +28,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
 	class USphereComponent* InteractionRange;
 
-	UPROPERTY(EditAnywhere, Category = "Traits")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Traits")
 	bool bLiar;
 
-	UPROPERTY(EditInstanceOnly, Category = "Traits")
+	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "Traits")
 	FText StatueName;
 	
 	// Called when the game starts or when spawned
