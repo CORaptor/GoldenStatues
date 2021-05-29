@@ -23,6 +23,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UButton* QuestionButton;
 
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Text")
+	FText QuestionText;
+
 	virtual void NativeConstruct() override;
 
 	UFUNCTION()

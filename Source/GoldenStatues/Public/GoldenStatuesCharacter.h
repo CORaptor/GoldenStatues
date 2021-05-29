@@ -67,7 +67,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 	float MovementInterval = 1;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Interaction")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Interaction")
 	TMap<TSubclassOf<class UQuestionWidget>, int> ScrollsPossessed;
 
 	bool bLockRotation = false;
